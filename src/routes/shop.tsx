@@ -69,16 +69,6 @@ function Shop() {
         <div>
           <div className="mb-8 flex items-center justify-between border-b border-border pb-4">
             <p className="text-sm text-muted-foreground">{products.data?.length ?? 0} pieces</p>
-            <select
-              aria-label="Sort"
-              value={s.sort ?? "new"}
-              onChange={(e) => {
-                const url = new URL(window.location.href);
-                url.searchParams.set("sort", JSON.stringify(e.target.value));
-                window.history.replaceState(null, "", url);
-              }}
-              className="hidden"
-            />
             <div className="flex gap-4 text-xs uppercase tracking-[0.15em]">
               {([["new", "Newest"], ["price-asc", "Price ↑"], ["price-desc", "Price ↓"]] as const).map(([v, l]) => (
                 <Link key={v} to="/shop" search={{ ...s, sort: v === "new" ? undefined : v }} className={(s.sort ?? "new") === v ? "text-foreground" : "text-muted-foreground hover:text-foreground"}>{l}</Link>
