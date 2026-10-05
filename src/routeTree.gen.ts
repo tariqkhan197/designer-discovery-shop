@@ -10,7 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as AuthenticatedBagRouteImport } from './routes/_authenticated/bag'
 import { Route as DesignersIndexRouteImport } from './routes/designers.index'
 import { Route as DesignersSlugRouteImport } from './routes/designers.$slug'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
@@ -20,10 +24,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedBagRoute = AuthenticatedBagRouteImport.update({
+  id: '/bag',
+  path: '/bag',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const DesignersIndexRoute = DesignersIndexRouteImport.update({
   id: '/designers/',
@@ -43,14 +66,20 @@ const ProductSlugRoute = ProductSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/shop': typeof ShopRoute
+  '/bag': typeof AuthenticatedBagRoute
   '/designers/$slug': typeof DesignersSlugRoute
   '/product/$slug': typeof ProductSlugRoute
   '/designers/': typeof DesignersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/shop': typeof ShopRoute
+  '/bag': typeof AuthenticatedBagRoute
   '/designers/$slug': typeof DesignersSlugRoute
   '/product/$slug': typeof ProductSlugRoute
   '/designers': typeof DesignersIndexRoute
@@ -58,7 +87,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/shop': typeof ShopRoute
+  '/_authenticated/bag': typeof AuthenticatedBagRoute
   '/designers/$slug': typeof DesignersSlugRoute
   '/product/$slug': typeof ProductSlugRoute
   '/designers/': typeof DesignersIndexRoute
@@ -66,13 +99,32 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/shop' | '/designers/$slug' | '/product/$slug' | '/designers/'
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/shop'
+    | '/bag'
+    | '/designers/$slug'
+    | '/product/$slug'
+    | '/designers/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/shop' | '/designers/$slug' | '/product/$slug' | '/designers'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/shop'
+    | '/bag'
+    | '/designers/$slug'
+    | '/product/$slug'
+    | '/designers'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
     | '/shop'
+    | '/_authenticated/bag'
     | '/designers/$slug'
     | '/product/$slug'
     | '/designers/'
@@ -80,6 +132,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ShopRoute: typeof ShopRoute
   DesignersSlugRoute: typeof DesignersSlugRoute
   ProductSlugRoute: typeof ProductSlugRoute
@@ -95,12 +150,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shop': {
       id: '/shop'
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/bag': {
+      id: '/_authenticated/bag'
+      path: '/bag'
+      fullPath: '/bag'
+      preLoaderRoute: typeof AuthenticatedBagRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/designers/': {
       id: '/designers/'
@@ -126,8 +209,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBagRoute: typeof AuthenticatedBagRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBagRoute: AuthenticatedBagRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ShopRoute: ShopRoute,
   DesignersSlugRoute: DesignersSlugRoute,
   ProductSlugRoute: ProductSlugRoute,
