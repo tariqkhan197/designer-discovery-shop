@@ -72,6 +72,7 @@ export type Database = {
       }
       order_items: {
         Row: {
+          fulfillment_status: string
           id: string
           image_key: string
           order_id: string
@@ -83,6 +84,7 @@ export type Database = {
           vendor_id: string | null
         }
         Insert: {
+          fulfillment_status?: string
           id?: string
           image_key: string
           order_id: string
@@ -94,6 +96,7 @@ export type Database = {
           vendor_id?: string | null
         }
         Update: {
+          fulfillment_status?: string
           id?: string
           image_key?: string
           order_id?: string
@@ -342,6 +345,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      become_vendor: {
+        Args: { _country: string; _name: string; _story: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -349,6 +356,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      owns_vendor: { Args: { _vendor_id: string }; Returns: boolean }
       place_order: {
         Args: {
           _address: string
@@ -359,6 +367,7 @@ export type Database = {
         }
         Returns: string
       }
+      vendor_in_order: { Args: { _order_id: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "vendor" | "customer"
