@@ -20,11 +20,11 @@ export type Product = {
 };
 
 export type ProductFilters = {
-  category?: string;
-  designer?: string;
-  q?: string;
-  sort?: "new" | "price-asc" | "price-desc";
-  max?: number;
+  category?: string | undefined;
+  designer?: string | undefined;
+  q?: string | undefined;
+  sort?: "new" | "price-asc" | "price-desc" | undefined;
+  max?: number | undefined;
 };
 
 export const categoriesQuery = () =>

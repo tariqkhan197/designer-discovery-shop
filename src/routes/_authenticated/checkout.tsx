@@ -50,7 +50,7 @@ function Checkout() {
             _name: form.name, _address: form.address, _city: form.city, _country: form.country, _postal: form.postal,
           });
           setBusy(false);
-          if (error) return toast.error(error.message);
+          if (error) { toast.error(error.message); return; }
           qc.invalidateQueries();
           navigate({ to: "/orders/$id", params: { id: data as string } });
         }}
