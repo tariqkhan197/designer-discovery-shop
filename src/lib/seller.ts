@@ -177,3 +177,40 @@ export function useSetFulfillment() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ["seller-orders"] }),
   });
 }
+
+export type Payout = { id: string; amount: number; status: string; requested_at: string; paid_at: string | null };
+
+export function useMyCommissionRate(userId: string) {
+  return useQuery({
+    queryKey: ["my-commission", userId],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("vendors").select("commission_rate").eq("owner_id", userId).maybeSingle();
+      if (error) throw error;
+      return Number(data?.commission_rate ?? 0.15);
+    },
+  });
+}
+
+export function usePayouts(vendorId?: string) {
+  return useQuery({
+    queryKey: ["payouts", vendorId],
+    enabled: !!vendorId,
+    queryFn: async () => {
+      const { data, error } = await supabase.from("payouts").select("id, amount, status, requested_at, paid_at")
+        .eq("vendor_id", vendorId!).order("requested_at", { ascending: false });
+      if (error) throw error;
+      return data as Payout[];
+    },
+  });
+}
+
+export function useRequestPayout() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async () => {
+      const { error } = await supabase.rpc("request_payout");
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["payouts"] }),
+  });
+}
