@@ -14,7 +14,7 @@ export function ProductForm({
   userId, initial, busy, onSubmit,
 }: {
   userId: string;
-  initial?: SellerProduct;
+  initial?: SellerProduct | undefined;
   busy: boolean;
   onSubmit: (input: ProductInput) => void;
 }) {
