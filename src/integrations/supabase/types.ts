@@ -176,6 +176,41 @@ export type Database = {
         }
         Relationships: []
       }
+      payouts: {
+        Row: {
+          amount: number
+          id: string
+          paid_at: string | null
+          requested_at: string
+          status: string
+          vendor_id: string
+        }
+        Insert: {
+          amount: number
+          id?: string
+          paid_at?: string | null
+          requested_at?: string
+          status?: string
+          vendor_id: string
+        }
+        Update: {
+          amount?: number
+          id?: string
+          paid_at?: string | null
+          requested_at?: string
+          status?: string
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payouts_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       products: {
         Row: {
           category_id: string | null
@@ -283,6 +318,7 @@ export type Database = {
       }
       vendors: {
         Row: {
+          commission_rate: number
           country: string | null
           created_at: string
           id: string
@@ -292,6 +328,7 @@ export type Database = {
           story: string | null
         }
         Insert: {
+          commission_rate?: number
           country?: string | null
           created_at?: string
           id?: string
@@ -301,6 +338,7 @@ export type Database = {
           story?: string | null
         }
         Update: {
+          commission_rate?: number
           country?: string | null
           created_at?: string
           id?: string
@@ -366,6 +404,11 @@ export type Database = {
           _postal: string
         }
         Returns: string
+      }
+      request_payout: { Args: never; Returns: string }
+      vendor_available_balance: {
+        Args: { _vendor_id: string }
+        Returns: number
       }
       vendor_in_order: { Args: { _order_id: string }; Returns: boolean }
     }

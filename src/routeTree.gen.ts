@@ -24,6 +24,7 @@ import { Route as DesignersSlugRouteImport } from './routes/designers.$slug'
 import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as AuthenticatedOrdersIdRouteImport } from './routes/_authenticated/orders.$id'
 import { Route as AuthenticatedSellerIndexRouteImport } from './routes/_authenticated/seller.index'
+import { Route as AuthenticatedSellerEarningsRouteImport } from './routes/_authenticated/seller.earnings'
 import { Route as AuthenticatedSellerOrdersRouteImport } from './routes/_authenticated/seller.orders'
 import { Route as AuthenticatedSellerProductsRouteImport } from './routes/_authenticated/seller.products'
 
@@ -102,6 +103,12 @@ const AuthenticatedSellerIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedSellerRoute,
   } as any)
+const AuthenticatedSellerEarningsRoute =
+  AuthenticatedSellerEarningsRouteImport.update({
+    id: '/earnings',
+    path: '/earnings',
+    getParentRoute: () => AuthenticatedSellerRoute,
+  } as any)
 const AuthenticatedSellerOrdersRoute =
   AuthenticatedSellerOrdersRouteImport.update({
     id: '/orders',
@@ -129,6 +136,7 @@ export interface FileRoutesByFullPath {
   '/product/$slug': typeof ProductSlugRoute
   '/designers/': typeof DesignersIndexRoute
   '/orders/$id': typeof AuthenticatedOrdersIdRoute
+  '/seller/earnings': typeof AuthenticatedSellerEarningsRoute
   '/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/seller/products': typeof AuthenticatedSellerProductsRoute
   '/seller/': typeof AuthenticatedSellerIndexRoute
@@ -146,6 +154,7 @@ export interface FileRoutesByTo {
   '/product/$slug': typeof ProductSlugRoute
   '/designers': typeof DesignersIndexRoute
   '/orders/$id': typeof AuthenticatedOrdersIdRoute
+  '/seller/earnings': typeof AuthenticatedSellerEarningsRoute
   '/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/seller/products': typeof AuthenticatedSellerProductsRoute
   '/seller': typeof AuthenticatedSellerIndexRoute
@@ -166,6 +175,7 @@ export interface FileRoutesById {
   '/product/$slug': typeof ProductSlugRoute
   '/designers/': typeof DesignersIndexRoute
   '/_authenticated/orders/$id': typeof AuthenticatedOrdersIdRoute
+  '/_authenticated/seller/earnings': typeof AuthenticatedSellerEarningsRoute
   '/_authenticated/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/_authenticated/seller/products': typeof AuthenticatedSellerProductsRoute
   '/_authenticated/seller/': typeof AuthenticatedSellerIndexRoute
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/designers/'
     | '/orders/$id'
+    | '/seller/earnings'
     | '/seller/orders'
     | '/seller/products'
     | '/seller/'
@@ -203,6 +214,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/designers'
     | '/orders/$id'
+    | '/seller/earnings'
     | '/seller/orders'
     | '/seller/products'
     | '/seller'
@@ -222,6 +234,7 @@ export interface FileRouteTypes {
     | '/product/$slug'
     | '/designers/'
     | '/_authenticated/orders/$id'
+    | '/_authenticated/seller/earnings'
     | '/_authenticated/seller/orders'
     | '/_authenticated/seller/products'
     | '/_authenticated/seller/'
@@ -345,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSellerIndexRouteImport
       parentRoute: typeof AuthenticatedSellerRoute
     }
+    '/_authenticated/seller/earnings': {
+      id: '/_authenticated/seller/earnings'
+      path: '/earnings'
+      fullPath: '/seller/earnings'
+      preLoaderRoute: typeof AuthenticatedSellerEarningsRouteImport
+      parentRoute: typeof AuthenticatedSellerRoute
+    }
     '/_authenticated/seller/orders': {
       id: '/_authenticated/seller/orders'
       path: '/orders'
@@ -363,12 +383,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedSellerRouteChildren {
+  AuthenticatedSellerEarningsRoute: typeof AuthenticatedSellerEarningsRoute
   AuthenticatedSellerOrdersRoute: typeof AuthenticatedSellerOrdersRoute
   AuthenticatedSellerProductsRoute: typeof AuthenticatedSellerProductsRoute
   AuthenticatedSellerIndexRoute: typeof AuthenticatedSellerIndexRoute
 }
 
 const AuthenticatedSellerRouteChildren: AuthenticatedSellerRouteChildren = {
+  AuthenticatedSellerEarningsRoute: AuthenticatedSellerEarningsRoute,
   AuthenticatedSellerOrdersRoute: AuthenticatedSellerOrdersRoute,
   AuthenticatedSellerProductsRoute: AuthenticatedSellerProductsRoute,
   AuthenticatedSellerIndexRoute: AuthenticatedSellerIndexRoute,
