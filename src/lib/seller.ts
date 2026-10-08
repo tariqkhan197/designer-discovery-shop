@@ -74,7 +74,7 @@ function slugify(s: string) {
 export function useSaveProduct(vendorId?: string) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, input }: { id?: string; input: ProductInput }) => {
+    mutationFn: async ({ id, input }: { id?: string | undefined; input: ProductInput }) => {
       if (!vendorId) throw new Error("No shop found");
       if (!input.name.trim()) throw new Error("Name is required");
       if (!(input.price > 0)) throw new Error("Price must be above zero");

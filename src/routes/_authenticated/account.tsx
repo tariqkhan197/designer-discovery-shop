@@ -28,7 +28,10 @@ function Account() {
           <p className="eyebrow">{user.email}</p>
           <h1 className="mt-3 text-5xl">My account</h1>
         </div>
-        <Button variant="luxeOutline" onClick={async () => { await supabase.auth.signOut(); qc.clear(); }}>Sign out</Button>
+        <div className="flex gap-3">
+          <Link to="/seller"><Button variant="luxe">Seller dashboard</Button></Link>
+          <Button variant="luxeOutline" onClick={async () => { await supabase.auth.signOut(); qc.clear(); }}>Sign out</Button>
+        </div>
       </div>
       <h2 className="mt-14 text-3xl">Orders</h2>
       {isLoading ? <p className="mt-6 text-muted-foreground">Loading…</p> : !orders?.length ? (

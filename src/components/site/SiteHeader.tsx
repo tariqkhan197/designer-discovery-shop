@@ -86,6 +86,7 @@ export function SiteFooter() {
           <p className="eyebrow">Account</p>
           <Link to="/account" className="block hover:text-bronze">My orders</Link>
           <Link to="/wishlist" className="block hover:text-bronze">Wishlist</Link>
+          <Link to="/seller" className="block hover:text-bronze">Sell on LUXORA</Link>
         </div>
       </div>
       <p className="pb-8 text-center text-xs text-muted-foreground">© {new Date().getFullYear()} {BRAND.name}</p>
