@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/brand";
 import { useOrders } from "@/lib/shopper";
+import { useIsAdmin } from "@/lib/admin";
 
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/_authenticated/account")({
 function Account() {
   const { user } = Route.useRouteContext();
   const { data: orders, isLoading } = useOrders(user.id);
+  const { data: isAdmin } = useIsAdmin(user.id);
   const qc = useQueryClient();
   return (
     <div className="mx-auto max-w-4xl px-5 py-14">
@@ -29,6 +31,7 @@ function Account() {
           <h1 className="mt-3 text-5xl">My account</h1>
         </div>
         <div className="flex gap-3">
+          {isAdmin && <Link to="/admin"><Button variant="luxe">Admin</Button></Link>}
           <Link to="/seller"><Button variant="luxe">Seller dashboard</Button></Link>
           <Button variant="luxeOutline" onClick={async () => { await supabase.auth.signOut(); qc.clear(); }}>Sign out</Button>
         </div>
