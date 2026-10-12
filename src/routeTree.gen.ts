@@ -33,6 +33,7 @@ import { Route as AuthenticatedSellerIndexRouteImport } from './routes/_authenti
 import { Route as AuthenticatedSellerEarningsRouteImport } from './routes/_authenticated/seller.earnings'
 import { Route as AuthenticatedSellerOrdersRouteImport } from './routes/_authenticated/seller.orders'
 import { Route as AuthenticatedSellerProductsRouteImport } from './routes/_authenticated/seller.products'
+import { Route as AuthenticatedSellerReviewsRouteImport } from './routes/_authenticated/seller.reviews'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -161,6 +162,12 @@ const AuthenticatedSellerProductsRoute =
     path: '/products',
     getParentRoute: () => AuthenticatedSellerRoute,
   } as any)
+const AuthenticatedSellerReviewsRoute =
+  AuthenticatedSellerReviewsRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => AuthenticatedSellerRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/seller/earnings': typeof AuthenticatedSellerEarningsRoute
   '/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/seller/products': typeof AuthenticatedSellerProductsRoute
+  '/seller/reviews': typeof AuthenticatedSellerReviewsRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/seller/': typeof AuthenticatedSellerIndexRoute
 }
@@ -207,6 +215,7 @@ export interface FileRoutesByTo {
   '/seller/earnings': typeof AuthenticatedSellerEarningsRoute
   '/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/seller/products': typeof AuthenticatedSellerProductsRoute
+  '/seller/reviews': typeof AuthenticatedSellerReviewsRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/seller': typeof AuthenticatedSellerIndexRoute
 }
@@ -234,6 +243,7 @@ export interface FileRoutesById {
   '/_authenticated/seller/earnings': typeof AuthenticatedSellerEarningsRoute
   '/_authenticated/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/_authenticated/seller/products': typeof AuthenticatedSellerProductsRoute
+  '/_authenticated/seller/reviews': typeof AuthenticatedSellerReviewsRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/seller/': typeof AuthenticatedSellerIndexRoute
 }
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/seller/earnings'
     | '/seller/orders'
     | '/seller/products'
+    | '/seller/reviews'
     | '/admin/'
     | '/seller/'
   fileRoutesByTo: FileRoutesByTo
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/seller/earnings'
     | '/seller/orders'
     | '/seller/products'
+    | '/seller/reviews'
     | '/admin'
     | '/seller'
   id:
@@ -310,6 +322,7 @@ export interface FileRouteTypes {
     | '/_authenticated/seller/earnings'
     | '/_authenticated/seller/orders'
     | '/_authenticated/seller/products'
+    | '/_authenticated/seller/reviews'
     | '/_authenticated/admin/'
     | '/_authenticated/seller/'
   fileRoutesById: FileRoutesById
@@ -495,6 +508,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSellerProductsRouteImport
       parentRoute: typeof AuthenticatedSellerRoute
     }
+    '/_authenticated/seller/reviews': {
+      id: '/_authenticated/seller/reviews'
+      path: '/reviews'
+      fullPath: '/seller/reviews'
+      preLoaderRoute: typeof AuthenticatedSellerReviewsRouteImport
+      parentRoute: typeof AuthenticatedSellerRoute
+    }
   }
 }
 
@@ -521,6 +541,7 @@ interface AuthenticatedSellerRouteChildren {
   AuthenticatedSellerEarningsRoute: typeof AuthenticatedSellerEarningsRoute
   AuthenticatedSellerOrdersRoute: typeof AuthenticatedSellerOrdersRoute
   AuthenticatedSellerProductsRoute: typeof AuthenticatedSellerProductsRoute
+  AuthenticatedSellerReviewsRoute: typeof AuthenticatedSellerReviewsRoute
   AuthenticatedSellerIndexRoute: typeof AuthenticatedSellerIndexRoute
 }
 
@@ -528,6 +549,7 @@ const AuthenticatedSellerRouteChildren: AuthenticatedSellerRouteChildren = {
   AuthenticatedSellerEarningsRoute: AuthenticatedSellerEarningsRoute,
   AuthenticatedSellerOrdersRoute: AuthenticatedSellerOrdersRoute,
   AuthenticatedSellerProductsRoute: AuthenticatedSellerProductsRoute,
+  AuthenticatedSellerReviewsRoute: AuthenticatedSellerReviewsRoute,
   AuthenticatedSellerIndexRoute: AuthenticatedSellerIndexRoute,
 }
 
