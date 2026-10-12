@@ -298,6 +298,50 @@ export type Database = {
         }
         Relationships: []
       }
+      reviews: {
+        Row: {
+          author_name: string
+          body: string
+          created_at: string
+          id: string
+          product_id: string
+          rating: number
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          author_name?: string
+          body?: string
+          created_at?: string
+          id?: string
+          product_id: string
+          rating: number
+          title?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          author_name?: string
+          body?: string
+          created_at?: string
+          id?: string
+          product_id?: string
+          rating?: number
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -387,6 +431,7 @@ export type Database = {
         Args: { _country: string; _name: string; _story: string }
         Returns: string
       }
+      has_purchased: { Args: { _product_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -406,6 +451,15 @@ export type Database = {
         Returns: string
       }
       request_payout: { Args: never; Returns: string }
+      submit_review: {
+        Args: {
+          _body: string
+          _product_id: string
+          _rating: number
+          _title: string
+        }
+        Returns: string
+      }
       vendor_available_balance: {
         Args: { _vendor_id: string }
         Returns: number

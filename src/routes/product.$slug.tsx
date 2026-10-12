@@ -8,6 +8,7 @@ import { productQuery } from "@/lib/catalog";
 import { productImage } from "@/lib/images";
 import { BRAND, formatPrice } from "@/lib/brand";
 import { useCartMutations, useToggleWishlist, useUser, useWishlist } from "@/lib/shopper";
+import { ProductReviews } from "@/components/site/Reviews";
 
 export const Route = createFileRoute("/product/$slug")({
   head: ({ params }) => {
@@ -53,6 +54,7 @@ function ProductPage() {
   };
 
   return (
+    <>
     <div className="mx-auto grid max-w-7xl gap-12 px-5 py-14 md:grid-cols-2">
       <div className="bg-surface">
         <img src={productImage(p.image_key)} alt={p.name} width={768} height={1024} className="w-full object-cover" />
@@ -116,5 +118,7 @@ function ProductPage() {
         </div>
       </div>
     </div>
+    <ProductReviews productId={p.id} userId={user?.id} />
+    </>
   );
 }

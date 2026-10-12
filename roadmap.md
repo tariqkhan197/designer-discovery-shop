@@ -4,4 +4,5 @@
 - [ ] Phase 2b: Vendor payouts & commissions
 - [x] Phase 3: Admin command center (overview, designers & commissions, payouts, orders, product moderation)
 - [ ] Real card payments (currently placeholder checkout)
-- [ ] Reviews, coupons, flash sales, loyalty, comparison, notifications
+- [x] Reviews
+- [ ] Coupons, flash sales, loyalty, comparison, notifications

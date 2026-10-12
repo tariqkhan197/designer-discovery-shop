@@ -24,6 +24,7 @@ const TABS = [
   { to: "/seller/products", label: "Products & stock", exact: false },
   { to: "/seller/orders", label: "Orders", exact: false },
   { to: "/seller/earnings", label: "Earnings & payouts", exact: false },
+  { to: "/seller/reviews", label: "Reviews", exact: false },
 ] as const;
 
 function SellerLayout() {
