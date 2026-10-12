@@ -15,6 +15,13 @@
       "when": 1791732764031,
       "tag": "0001_admin_access",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791801934966,
+      "tag": "0002_product_reviews",
+      "breakpoints": true
     }
   ]
 }
