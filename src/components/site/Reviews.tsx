@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { summarize, useCanReview, useDeleteReview, useProductReviews, useSubmitReview } from "@/lib/reviews";
 
-export function Stars({ value, size = 14, onChange }: { value: number; size?: number; onChange?: (n: number) => void }) {
+export function Stars({ value, size = 14, onChange }: { value: number; size?: number; onChange?: ((n: number) => void) | undefined }) {
   return (
     <span className="inline-flex gap-0.5 text-bronze" aria-label={`${value.toFixed(1)} out of 5`}>
       {[1, 2, 3, 4, 5].map((n) => {
@@ -19,7 +19,7 @@ export function Stars({ value, size = 14, onChange }: { value: number; size?: nu
   );
 }
 
-export function ProductReviews({ productId, userId }: { productId: string; userId?: string }) {
+export function ProductReviews({ productId, userId }: { productId: string; userId?: string | undefined }) {
   const { data: reviews = [] } = useProductReviews(productId);
   const { data: canReview } = useCanReview(productId, userId);
   const submit = useSubmitReview();
@@ -83,7 +83,7 @@ export function ProductReviews({ productId, userId }: { productId: string; userI
   );
 }
 
-export function ReviewItem({ r, extra }: { r: { rating: number; title: string; body: string; author_name: string; created_at: string }; extra?: React.ReactNode }) {
+export function ReviewItem({ r, extra }: { r: { rating: number; title: string; body: string; author_name: string; created_at: string }; extra?: React.ReactNode | undefined }) {
   return (
     <li className="py-6">
       <div className="flex flex-wrap items-center gap-3">
